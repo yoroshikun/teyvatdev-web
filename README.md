@@ -11,7 +11,7 @@ The winners version will be used for the official coming soon page! And a discor
 Submissions should include.
 
 - Teyvat Dev Logo
-- Social links to email (contact@teyvat.dev), discord (https://discord.gg/t9kT4J3w), github (here).
+- Social links to email (contact@teyvat.dev), discord (https://discord.gg/AKtCEm7QEn), github (here).
 - Following the code and style design already provided
 - Disclaimer for mihoyo
 - Try add your own flare, have fun with it
