@@ -11,7 +11,7 @@
   align-items: center;
 }
 
-.main {
+.content {
   padding: 5rem 0;
   flex: 1;
   display: flex;
@@ -22,45 +22,25 @@
   z-index: 10;
 }
 
-.hero{
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 100vw;
-  text-transform: uppercase;
-  font-size: 20vw;
-  font-weight: bold;
-  text-align: center;
-  line-height: 18vw;
-  display: grid;
-  place-content: center;
-  color: colors.$white;
-  opacity: 0.01;
-  user-select: none;
-  transition: opacity 350ms;
-  @media screen and (max-width: 800px){
-    opacity: 0;
-  }
+.notice {
+  font-size: 1.5rem;
+  color: colors.$disabled;
+  margin: 10px 0 0px;
 }
 
-.socials{
+.socials {
   display: grid;
-  color: colors.$disabled;
-  font-size: 1.3rem;
+  font-size: 1rem;
   text-align: center;
-  & p{
-    margin: 15px 0 10px;
+  & p {
+    margin: 15px 0 20px;
   }
-  & .icons{
+  & .icons {
     display: grid;
+    place-content: center;
     grid-template-columns: repeat(3, 32px);
     grid-template-rows: 32px;
     column-gap: 30px;
-    & img{
-      height: 100%;
-      width: 100%;
-    }
   }
 }
 

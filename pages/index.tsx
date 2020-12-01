@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Image from 'next/image'
 import styles from '../styles/Home.module.scss';
 
 const Home = (): React.ReactNode => {
@@ -9,31 +10,32 @@ const Home = (): React.ReactNode => {
         <link rel="icon" href="/favicon.png" />
       </Head>
 
-      <div className={styles.hero}>
-        coming soon
-      </div>
-      <main className={styles.main}>
+      <main className={styles.content}>
         <h1 className={styles.title}>
           Teyvat <span>Dev</span>
         </h1>
-
+        <p className={styles.notice}>
+          Coming Soon...
+        </p>
         <div className={styles.socials}>
           <p>Find us on:</p>
           <div className={styles.icons}>
-            <a href="https://discord.gg/t9kT4J3w" target="_blank" rel="noreferrer noopener">
-              <img src="/icons/discord.png" />
+            <a href="https://discord.com/invite/AKtCEm7QEn" target="_blank" rel="noreferrer noopener">
+              <Image src="/icons/discord.png" alt="discord" height={64} width={64} />
             </a>
             <a href="https://github.com/yoroshikun/teyvatdev-web" target="_blank" rel="noreferrer noopener">
-              <img src="/icons/github.png" />
+              <Image src="/icons/github.png" alt="github" height={64} width={64} />
             </a>
             <a href="mailto:contact@teyvat.dev" target="_blank" rel="noreferrer noopener">
-              <img src="/icons/email.png" />
+              <Image src="/icons/email.png" alt="email" height={64} width={64} />
             </a>
           </div>
         </div>
       </main>
-
-      <footer className={styles.footer}>Teyvat.dev is not affiliated with or endorsed by miHoYo. </footer>
+      <footer className={styles.footer}>
+        <Image src="/Full_Colour_Slime.svg" alt="Teyvat Dev logo" height={38} width={38} />
+        Teyvat.dev is not affiliated with or endorsed by miHoYo.
+      </footer>
     </div>
   );
 };
