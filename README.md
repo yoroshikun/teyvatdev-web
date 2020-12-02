@@ -4,17 +4,17 @@ The web presence for Teyvat Dev, an API for developer resources for Genshin Impa
 
 ## Challenge
 
-Small challenge to help make the coming soon page! show of your skills of adaptation and front end development by creating the coming soon page for teyvat dev! Clone this repo and hack away, once you are ready create a pull request to submit your version!
+Want to add some extra flare to the welcome page, have a shot! The welcome page is a little too simple
+right now and would love some added flare. Submit a pull request with your added flare to help sell 
+teyvat dev to prospective users!
 
-The winners version will be used for the official coming soon page! And a discord role for your efforts.
+The winners version will be used for the official welcome page! And a discord role for your efforts.
 
-Submissions should include.
+Submission ideas.
 
-- Teyvat Dev Logo
-- Social links to email (contact@teyvat.dev), discord (https://discord.gg/AKtCEm7QEn), github (here).
-- Following the code and style design already provided
-- Disclaimer for mihoyo
-- Try add your own flare, have fun with it
+- Animated logo
+- Partical effects
+- Animated hover effects
 
 Even if you don't win I will still look over your submissions and give constructive feedback!
 
