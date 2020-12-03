@@ -5,7 +5,7 @@ The web presence for Teyvat Dev, an API for developer resources for Genshin Impa
 ## Challenge
 
 Want to add some extra flare to the welcome page, have a shot! The welcome page is a little too simple
-right now and would love some added flare. Submit a pull request with your added flare to help sell 
+right now and would love some added flare. Submit a pull request with your added flare to help sell
 teyvat dev to prospective users!
 
 The winners version will be used for the official welcome page! And a discord role for your efforts.
