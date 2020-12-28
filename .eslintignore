@@ -1,3 +1,6 @@
 .next
 node_modules
 coverage
+generated
+postcss.config.js
+tailwind.config.js

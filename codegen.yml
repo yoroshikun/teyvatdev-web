@@ -1,0 +1,31 @@
+overwrite: true
+schema: 'http://localhost:4000'
+documents: 'graphql/**/*.graphql'
+generates:
+  generated/graphql.tsx:
+    plugins:
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-react-apollo'
+    config:
+      reactApolloVersion: 3
+      withHooks: true
+      withHOC: false
+      withComponent: false
+      exportFragmentSpreadSubTypes: true
+      documentMode: graphQLTag
+  generated/page.tsx:
+    config:
+      documentMode: external
+      importDocumentNodeExternallyFrom: ./graphql
+      reactApolloVersion: 3
+      withHooks: true
+      apolloClientInstanceImport: '../lib/apolloClient'
+    preset: import-types
+    presetConfig:
+      typesPath: ./graphql
+    plugins:
+      - 'graphql-codegen-apollo-next-ssr'
+hooks:
+  afterAllFileWrite:
+    - prettier --write
