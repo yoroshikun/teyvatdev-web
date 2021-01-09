@@ -82,11 +82,7 @@ const Signup = (): React.ReactElement => {
               </h1>
               <h2 className="text-lg mt-5 text-center">
                 An email has been sent to you for activation of your account,
-                You can now use our API by following the instructions in the
-                <span className="text-primary bg-secondary">
-                  #tech-support
-                </span>{' '}
-                channel in the discord!
+                You can also now login to your account
               </h2>
               <Link href="/login">
                 <button className="bg-primary mt-2 p-2 text-lg w-full font-bold hover:bg-primary-dark">
