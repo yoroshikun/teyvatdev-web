@@ -70,6 +70,9 @@ export type Query = {
   forgeRecipe?: Maybe<ForgeRecipe>;
   forgeRecipes?: Maybe<Array<Maybe<ForgeRecipe>>>;
   filterForgeRecipes?: Maybe<Array<Maybe<ForgeRecipe>>>;
+  gadget?: Maybe<Gadget>;
+  gadgets?: Maybe<Array<Maybe<Gadget>>>;
+  filterGadgets?: Maybe<Array<Maybe<Gadget>>>;
   region?: Maybe<Region>;
   regions?: Maybe<Array<Maybe<Region>>>;
   filterRegions?: Maybe<Array<Maybe<Region>>>;
@@ -325,6 +328,21 @@ export type QueryFilterForgeRecipesArgs = {
   searchString?: Maybe<Scalars['String']>;
 };
 
+export type QueryGadgetArgs = {
+  where: GadgetWhereUniqueInput;
+};
+
+export type QueryGadgetsArgs = {
+  take?: Maybe<Scalars['Int']>;
+  skip?: Maybe<Scalars['Int']>;
+};
+
+export type QueryFilterGadgetsArgs = {
+  take?: Maybe<Scalars['Int']>;
+  skip?: Maybe<Scalars['Int']>;
+  searchString?: Maybe<Scalars['String']>;
+};
+
 export type QueryRegionArgs = {
   where: RegionWhereUniqueInput;
 };
@@ -477,14 +495,20 @@ export type Mutation = {
   deleteOneElement?: Maybe<Element>;
   deleteOneForgeRecipe?: Maybe<ForgeRecipe>;
   createOneForgeRecipe: ForgeRecipe;
+  createOneGadget: Gadget;
+  deleteOneGadget?: Maybe<Gadget>;
   createOneRegion: Region;
   deleteOneRegion?: Maybe<Region>;
   createOneTalent: Talent;
   deleteOneTalent?: Maybe<Talent>;
   createOneTalentLevelUpMaterial: TalentLevelUpMaterial;
   deleteOneTalentLevelUpMaterial?: Maybe<TalentLevelUpMaterial>;
+  updateSlimeColor?: Maybe<InfoPayload>;
+  updateSelfUser?: Maybe<User>;
   signup?: Maybe<InfoPayload>;
   login?: Maybe<AuthPayload>;
+  updateSelfUserSecret?: Maybe<UserSecret>;
+  updateToken?: Maybe<InfoPayload>;
   resetPassword?: Maybe<InfoPayload>;
   generateResetToken?: Maybe<InfoPayload>;
   activateAccount?: Maybe<InfoPayload>;
@@ -618,6 +642,14 @@ export type MutationCreateOneForgeRecipeArgs = {
   data: ForgeRecipeCreateInput;
 };
 
+export type MutationCreateOneGadgetArgs = {
+  data: GadgetCreateInput;
+};
+
+export type MutationDeleteOneGadgetArgs = {
+  where: GadgetWhereUniqueInput;
+};
+
 export type MutationCreateOneRegionArgs = {
   data: RegionCreateInput;
 };
@@ -642,8 +674,17 @@ export type MutationDeleteOneTalentLevelUpMaterialArgs = {
   where: TalentLevelUpMaterialWhereUniqueInput;
 };
 
-export type MutationSignupArgs = {
+export type MutationUpdateSlimeColorArgs = {
+  color: Scalars['String'];
+};
+
+export type MutationUpdateSelfUserArgs = {
   username?: Maybe<Scalars['String']>;
+  slimeColor?: Maybe<Scalars['String']>;
+};
+
+export type MutationSignupArgs = {
+  username: Scalars['String'];
   email: Scalars['String'];
   password: Scalars['String'];
 };
@@ -651,6 +692,14 @@ export type MutationSignupArgs = {
 export type MutationLoginArgs = {
   email: Scalars['String'];
   password: Scalars['String'];
+};
+
+export type MutationUpdateSelfUserSecretArgs = {
+  token?: Maybe<Scalars['String']>;
+};
+
+export type MutationUpdateTokenArgs = {
+  token: Scalars['String'];
 };
 
 export type MutationResetPasswordArgs = {
@@ -750,12 +799,14 @@ export type Character = {
   updatedAt: Scalars['DateTime'];
   name: Scalars['String'];
   constellations?: Maybe<Scalars['Json']>;
+  icon?: Maybe<Scalars['String']>;
   overview?: Maybe<Scalars['String']>;
   rarity: Scalars['Int'];
   stats?: Maybe<Scalars['Json']>;
   ascensions: Array<CharacterAscension>;
   elements: Array<Element>;
-  profile?: Maybe<CharacterProfile>;
+  characterProfile?: Maybe<CharacterProfile>;
+  characterProfileId?: Maybe<Scalars['String']>;
   talents: Array<Talent>;
   weapon?: Maybe<WeaponType>;
 };
@@ -830,11 +881,12 @@ export type CharacterProfile = {
   affiliation?: Maybe<Scalars['String']>;
   birthday?: Maybe<Scalars['String']>;
   constellation?: Maybe<Scalars['String']>;
+  images?: Maybe<Scalars['Json']>;
   overview?: Maybe<Scalars['String']>;
   story?: Maybe<Scalars['Json']>;
   voiceActor?: Maybe<Scalars['Json']>;
   voiceLines?: Maybe<Scalars['Json']>;
-  character: Character;
+  character?: Maybe<Character>;
   region?: Maybe<Region>;
   specialtyDish?: Maybe<Consumeable>;
   vision?: Maybe<Element>;
@@ -1037,6 +1089,20 @@ export type ForgeRecipeWeaponEnhancementMaterialsArgs = {
   after?: Maybe<WeaponEnhancementMaterialWhereUniqueInput>;
 };
 
+export type Gadget = {
+  __typename?: 'Gadget';
+  id: Scalars['String'];
+  createdAt: Scalars['DateTime'];
+  updatedAt: Scalars['DateTime'];
+  name: Scalars['String'];
+  icon?: Maybe<Scalars['String']>;
+  craftingType?: Maybe<Scalars['String']>;
+  effect?: Maybe<Scalars['String']>;
+  recipe?: Maybe<Scalars['Json']>;
+  source?: Maybe<Scalars['String']>;
+  reuseable?: Maybe<Scalars['String']>;
+};
+
 export type InfoPayload = {
   __typename?: 'InfoPayload';
   message?: Maybe<Scalars['String']>;
@@ -1118,12 +1184,15 @@ export type User = {
   createdAt: Scalars['DateTime'];
   updatedAt: Scalars['DateTime'];
   username?: Maybe<Scalars['String']>;
+  slimeColor?: Maybe<Scalars['String']>;
   email: Scalars['String'];
+  userSecret?: Maybe<UserSecret>;
 };
 
 export type UserSecret = {
   __typename?: 'UserSecret';
   id: Scalars['String'];
+  token?: Maybe<Scalars['String']>;
   activated: Scalars['Boolean'];
   activationToken?: Maybe<Scalars['String']>;
   password: Scalars['String'];
@@ -1288,6 +1357,11 @@ export type ForgeRecipeWhereUniqueInput = {
   id?: Maybe<Scalars['String']>;
 };
 
+export type GadgetWhereUniqueInput = {
+  id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+};
+
 export type RegionWhereUniqueInput = {
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
@@ -1361,8 +1435,8 @@ export type CharacterCreateInput = {
   stats?: Maybe<Scalars['Json']>;
   weapon?: Maybe<WeaponType>;
   ascensions?: Maybe<CharacterAscensionCreateManyWithoutCharacterInput>;
+  characterProfile?: Maybe<CharacterProfileCreateOneWithoutCharacterInput>;
   elements?: Maybe<ElementCreateManyWithoutCharactersInput>;
-  profile?: Maybe<CharacterProfileCreateOneWithoutCharacterInput>;
   talents?: Maybe<TalentCreateManyWithoutCharacterInput>;
 };
 
@@ -1403,10 +1477,10 @@ export type CharacterProfileCreateInput = {
   story?: Maybe<Scalars['Json']>;
   voiceActor?: Maybe<Scalars['Json']>;
   voiceLines?: Maybe<Scalars['Json']>;
-  character: CharacterCreateOneWithoutProfileInput;
   region?: Maybe<RegionCreateOneWithoutCharacterProfilesInput>;
   specialtyDish?: Maybe<ConsumeableCreateOneWithoutCharacterSpecialtyInput>;
   vision?: Maybe<ElementCreateOneWithoutCharacterProfilesInput>;
+  character?: Maybe<CharacterCreateOneWithoutCharacterProfileInput>;
 };
 
 export type CommonAscensionMaterialCreateInput = {
@@ -1519,6 +1593,19 @@ export type ForgeRecipeCreateInput = {
   weaponEnhancementMaterials?: Maybe<WeaponEnhancementMaterialCreateManyWithoutRecipeUseInput>;
   weaponEnhancementMaterial?: Maybe<WeaponEnhancementMaterialCreateOneWithoutRecipeCreateInput>;
   weapon?: Maybe<WeaponCreateOneWithoutForgeRecipeInput>;
+};
+
+export type GadgetCreateInput = {
+  id?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  name: Scalars['String'];
+  icon?: Maybe<Scalars['String']>;
+  effect?: Maybe<Scalars['String']>;
+  craftingType?: Maybe<Scalars['String']>;
+  source?: Maybe<Scalars['String']>;
+  reuseable?: Maybe<Scalars['String']>;
+  recipe?: Maybe<Scalars['Json']>;
 };
 
 export type RegionCreateInput = {
@@ -1723,16 +1810,16 @@ export type CharacterAscensionCreateManyWithoutCharacterInput = {
   >;
 };
 
-export type ElementCreateManyWithoutCharactersInput = {
-  create?: Maybe<Array<ElementCreateWithoutCharactersInput>>;
-  connect?: Maybe<Array<ElementWhereUniqueInput>>;
-  connectOrCreate?: Maybe<Array<ElementCreateOrConnectWithoutcharactersInput>>;
-};
-
 export type CharacterProfileCreateOneWithoutCharacterInput = {
   create?: Maybe<CharacterProfileCreateWithoutCharacterInput>;
   connect?: Maybe<CharacterProfileWhereUniqueInput>;
   connectOrCreate?: Maybe<CharacterProfileCreateOrConnectWithoutcharacterInput>;
+};
+
+export type ElementCreateManyWithoutCharactersInput = {
+  create?: Maybe<Array<ElementCreateWithoutCharactersInput>>;
+  connect?: Maybe<Array<ElementWhereUniqueInput>>;
+  connectOrCreate?: Maybe<Array<ElementCreateOrConnectWithoutcharactersInput>>;
 };
 
 export type TalentCreateManyWithoutCharacterInput = {
@@ -1773,12 +1860,6 @@ export type CharacterAscensionCreateManyWithoutCharacterAscensionMaterialInput =
   >;
 };
 
-export type CharacterCreateOneWithoutProfileInput = {
-  create?: Maybe<CharacterCreateWithoutProfileInput>;
-  connect?: Maybe<CharacterWhereUniqueInput>;
-  connectOrCreate?: Maybe<CharacterCreateOrConnectWithoutprofileInput>;
-};
-
 export type RegionCreateOneWithoutCharacterProfilesInput = {
   create?: Maybe<RegionCreateWithoutCharacterProfilesInput>;
   connect?: Maybe<RegionWhereUniqueInput>;
@@ -1795,6 +1876,12 @@ export type ElementCreateOneWithoutCharacterProfilesInput = {
   create?: Maybe<ElementCreateWithoutCharacterProfilesInput>;
   connect?: Maybe<ElementWhereUniqueInput>;
   connectOrCreate?: Maybe<ElementCreateOrConnectWithoutcharacterProfilesInput>;
+};
+
+export type CharacterCreateOneWithoutCharacterProfileInput = {
+  create?: Maybe<CharacterCreateWithoutCharacterProfileInput>;
+  connect?: Maybe<CharacterWhereUniqueInput>;
+  connectOrCreate?: Maybe<CharacterCreateOrConnectWithoutcharacterProfileInput>;
 };
 
 export type CharacterAscensionCreateManyWithoutCommonAscensionMaterialsInput = {
@@ -2121,23 +2208,6 @@ export type CharacterAscensionCreateOrConnectWithoutcharacterInput = {
   create: CharacterAscensionCreateWithoutCharacterInput;
 };
 
-export type ElementCreateWithoutCharactersInput = {
-  id?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['DateTime']>;
-  updatedAt?: Maybe<Scalars['DateTime']>;
-  name: Scalars['String'];
-  archon?: Maybe<Scalars['String']>;
-  statusEffect?: Maybe<Scalars['String']>;
-  theme?: Maybe<Scalars['String']>;
-  characterProfiles?: Maybe<CharacterProfileCreateManyWithoutVisionInput>;
-  region?: Maybe<RegionCreateOneWithoutElementInput>;
-};
-
-export type ElementCreateOrConnectWithoutcharactersInput = {
-  where: ElementWhereUniqueInput;
-  create: ElementCreateWithoutCharactersInput;
-};
-
 export type CharacterProfileCreateWithoutCharacterInput = {
   id?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
@@ -2158,6 +2228,23 @@ export type CharacterProfileCreateWithoutCharacterInput = {
 export type CharacterProfileCreateOrConnectWithoutcharacterInput = {
   where: CharacterProfileWhereUniqueInput;
   create: CharacterProfileCreateWithoutCharacterInput;
+};
+
+export type ElementCreateWithoutCharactersInput = {
+  id?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  name: Scalars['String'];
+  archon?: Maybe<Scalars['String']>;
+  statusEffect?: Maybe<Scalars['String']>;
+  theme?: Maybe<Scalars['String']>;
+  characterProfiles?: Maybe<CharacterProfileCreateManyWithoutVisionInput>;
+  region?: Maybe<RegionCreateOneWithoutElementInput>;
+};
+
+export type ElementCreateOrConnectWithoutcharactersInput = {
+  where: ElementWhereUniqueInput;
+  create: ElementCreateWithoutCharactersInput;
 };
 
 export type TalentCreateWithoutCharacterInput = {
@@ -2187,8 +2274,8 @@ export type CharacterCreateWithoutAscensionsInput = {
   rarity: Scalars['Int'];
   stats?: Maybe<Scalars['Json']>;
   weapon?: Maybe<WeaponType>;
+  characterProfile?: Maybe<CharacterProfileCreateOneWithoutCharacterInput>;
   elements?: Maybe<ElementCreateManyWithoutCharactersInput>;
-  profile?: Maybe<CharacterProfileCreateOneWithoutCharacterInput>;
   talents?: Maybe<TalentCreateManyWithoutCharacterInput>;
 };
 
@@ -2247,27 +2334,6 @@ export type CharacterAscensionCreateOrConnectWithoutcharacterAscensionMaterialIn
   create: CharacterAscensionCreateWithoutCharacterAscensionMaterialInput;
 };
 
-export type CharacterCreateWithoutProfileInput = {
-  id?: Maybe<Scalars['String']>;
-  createdAt?: Maybe<Scalars['DateTime']>;
-  updatedAt?: Maybe<Scalars['DateTime']>;
-  name: Scalars['String'];
-  constellations?: Maybe<Scalars['Json']>;
-  icon?: Maybe<Scalars['String']>;
-  overview?: Maybe<Scalars['String']>;
-  rarity: Scalars['Int'];
-  stats?: Maybe<Scalars['Json']>;
-  weapon?: Maybe<WeaponType>;
-  ascensions?: Maybe<CharacterAscensionCreateManyWithoutCharacterInput>;
-  elements?: Maybe<ElementCreateManyWithoutCharactersInput>;
-  talents?: Maybe<TalentCreateManyWithoutCharacterInput>;
-};
-
-export type CharacterCreateOrConnectWithoutprofileInput = {
-  where: CharacterWhereUniqueInput;
-  create: CharacterCreateWithoutProfileInput;
-};
-
 export type RegionCreateWithoutCharacterProfilesInput = {
   id?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
@@ -2318,6 +2384,27 @@ export type ElementCreateOrConnectWithoutcharacterProfilesInput = {
   create: ElementCreateWithoutCharacterProfilesInput;
 };
 
+export type CharacterCreateWithoutCharacterProfileInput = {
+  id?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  name: Scalars['String'];
+  constellations?: Maybe<Scalars['Json']>;
+  icon?: Maybe<Scalars['String']>;
+  overview?: Maybe<Scalars['String']>;
+  rarity: Scalars['Int'];
+  stats?: Maybe<Scalars['Json']>;
+  weapon?: Maybe<WeaponType>;
+  ascensions?: Maybe<CharacterAscensionCreateManyWithoutCharacterInput>;
+  elements?: Maybe<ElementCreateManyWithoutCharactersInput>;
+  talents?: Maybe<TalentCreateManyWithoutCharacterInput>;
+};
+
+export type CharacterCreateOrConnectWithoutcharacterProfileInput = {
+  where: CharacterWhereUniqueInput;
+  create: CharacterCreateWithoutCharacterProfileInput;
+};
+
 export type CharacterAscensionCreateWithoutCommonAscensionMaterialsInput = {
   id?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
@@ -2362,9 +2449,9 @@ export type CharacterProfileCreateWithoutSpecialtyDishInput = {
   story?: Maybe<Scalars['Json']>;
   voiceActor?: Maybe<Scalars['Json']>;
   voiceLines?: Maybe<Scalars['Json']>;
-  character: CharacterCreateOneWithoutProfileInput;
   region?: Maybe<RegionCreateOneWithoutCharacterProfilesInput>;
   vision?: Maybe<ElementCreateOneWithoutCharacterProfilesInput>;
+  character?: Maybe<CharacterCreateOneWithoutCharacterProfileInput>;
 };
 
 export type CharacterProfileCreateOrConnectWithoutspecialtyDishInput = {
@@ -2564,7 +2651,7 @@ export type CharacterCreateWithoutElementsInput = {
   stats?: Maybe<Scalars['Json']>;
   weapon?: Maybe<WeaponType>;
   ascensions?: Maybe<CharacterAscensionCreateManyWithoutCharacterInput>;
-  profile?: Maybe<CharacterProfileCreateOneWithoutCharacterInput>;
+  characterProfile?: Maybe<CharacterProfileCreateOneWithoutCharacterInput>;
   talents?: Maybe<TalentCreateManyWithoutCharacterInput>;
 };
 
@@ -2585,9 +2672,9 @@ export type CharacterProfileCreateWithoutVisionInput = {
   story?: Maybe<Scalars['Json']>;
   voiceActor?: Maybe<Scalars['Json']>;
   voiceLines?: Maybe<Scalars['Json']>;
-  character: CharacterCreateOneWithoutProfileInput;
   region?: Maybe<RegionCreateOneWithoutCharacterProfilesInput>;
   specialtyDish?: Maybe<ConsumeableCreateOneWithoutCharacterSpecialtyInput>;
+  character?: Maybe<CharacterCreateOneWithoutCharacterProfileInput>;
 };
 
 export type CharacterProfileCreateOrConnectWithoutvisionInput = {
@@ -2678,9 +2765,9 @@ export type CharacterProfileCreateWithoutRegionInput = {
   story?: Maybe<Scalars['Json']>;
   voiceActor?: Maybe<Scalars['Json']>;
   voiceLines?: Maybe<Scalars['Json']>;
-  character: CharacterCreateOneWithoutProfileInput;
   specialtyDish?: Maybe<ConsumeableCreateOneWithoutCharacterSpecialtyInput>;
   vision?: Maybe<ElementCreateOneWithoutCharacterProfilesInput>;
+  character?: Maybe<CharacterCreateOneWithoutCharacterProfileInput>;
 };
 
 export type CharacterProfileCreateOrConnectWithoutregionInput = {
@@ -2735,8 +2822,8 @@ export type CharacterCreateWithoutTalentsInput = {
   stats?: Maybe<Scalars['Json']>;
   weapon?: Maybe<WeaponType>;
   ascensions?: Maybe<CharacterAscensionCreateManyWithoutCharacterInput>;
+  characterProfile?: Maybe<CharacterProfileCreateOneWithoutCharacterInput>;
   elements?: Maybe<ElementCreateManyWithoutCharactersInput>;
-  profile?: Maybe<CharacterProfileCreateOneWithoutCharacterInput>;
 };
 
 export type CharacterCreateOrConnectWithouttalentsInput = {
@@ -2968,10 +3055,39 @@ export type SignupMutation = { __typename?: 'Mutation' } & {
   signup?: Maybe<{ __typename?: 'InfoPayload' } & Pick<InfoPayload, 'message'>>;
 };
 
+export type UpdateSlimeColorMutationVariables = Exact<{
+  color: Scalars['String'];
+}>;
+
+export type UpdateSlimeColorMutation = { __typename?: 'Mutation' } & {
+  updateSlimeColor?: Maybe<
+    { __typename?: 'InfoPayload' } & Pick<InfoPayload, 'message'>
+  >;
+};
+
+export type UpdateTokenMutationVariables = Exact<{
+  token: Scalars['String'];
+}>;
+
+export type UpdateTokenMutation = { __typename?: 'Mutation' } & {
+  updateToken?: Maybe<
+    { __typename?: 'InfoPayload' } & Pick<InfoPayload, 'message'>
+  >;
+};
+
 export type GetMeQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetMeQuery = { __typename?: 'Query' } & {
-  me?: Maybe<{ __typename?: 'User' } & Pick<User, 'id' | 'username'>>;
+  me?: Maybe<
+    { __typename?: 'User' } & Pick<User, 'id' | 'username' | 'slimeColor'> & {
+        userSecret?: Maybe<
+          { __typename?: 'UserSecret' } & Pick<
+            UserSecret,
+            'token' | 'activated'
+          >
+        >;
+      }
+  >;
 };
 
 export const LoginDocument = gql`
@@ -3069,11 +3185,112 @@ export type SignupMutationOptions = Apollo.BaseMutationOptions<
   SignupMutation,
   SignupMutationVariables
 >;
+export const UpdateSlimeColorDocument = gql`
+  mutation updateSlimeColor($color: String!) {
+    updateSlimeColor(color: $color) {
+      message
+    }
+  }
+`;
+export type UpdateSlimeColorMutationFn = Apollo.MutationFunction<
+  UpdateSlimeColorMutation,
+  UpdateSlimeColorMutationVariables
+>;
+
+/**
+ * __useUpdateSlimeColorMutation__
+ *
+ * To run a mutation, you first call `useUpdateSlimeColorMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateSlimeColorMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateSlimeColorMutation, { data, loading, error }] = useUpdateSlimeColorMutation({
+ *   variables: {
+ *      color: // value for 'color'
+ *   },
+ * });
+ */
+export function useUpdateSlimeColorMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpdateSlimeColorMutation,
+    UpdateSlimeColorMutationVariables
+  >,
+) {
+  return Apollo.useMutation<
+    UpdateSlimeColorMutation,
+    UpdateSlimeColorMutationVariables
+  >(UpdateSlimeColorDocument, baseOptions);
+}
+export type UpdateSlimeColorMutationHookResult = ReturnType<
+  typeof useUpdateSlimeColorMutation
+>;
+export type UpdateSlimeColorMutationResult = Apollo.MutationResult<UpdateSlimeColorMutation>;
+export type UpdateSlimeColorMutationOptions = Apollo.BaseMutationOptions<
+  UpdateSlimeColorMutation,
+  UpdateSlimeColorMutationVariables
+>;
+export const UpdateTokenDocument = gql`
+  mutation updateToken($token: String!) {
+    updateToken(token: $token) {
+      message
+    }
+  }
+`;
+export type UpdateTokenMutationFn = Apollo.MutationFunction<
+  UpdateTokenMutation,
+  UpdateTokenMutationVariables
+>;
+
+/**
+ * __useUpdateTokenMutation__
+ *
+ * To run a mutation, you first call `useUpdateTokenMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateTokenMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateTokenMutation, { data, loading, error }] = useUpdateTokenMutation({
+ *   variables: {
+ *      token: // value for 'token'
+ *   },
+ * });
+ */
+export function useUpdateTokenMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpdateTokenMutation,
+    UpdateTokenMutationVariables
+  >,
+) {
+  return Apollo.useMutation<UpdateTokenMutation, UpdateTokenMutationVariables>(
+    UpdateTokenDocument,
+    baseOptions,
+  );
+}
+export type UpdateTokenMutationHookResult = ReturnType<
+  typeof useUpdateTokenMutation
+>;
+export type UpdateTokenMutationResult = Apollo.MutationResult<UpdateTokenMutation>;
+export type UpdateTokenMutationOptions = Apollo.BaseMutationOptions<
+  UpdateTokenMutation,
+  UpdateTokenMutationVariables
+>;
 export const GetMeDocument = gql`
   query getMe {
     me {
       id
       username
+      slimeColor
+      userSecret {
+        token
+        activated
+      }
     }
   }
 `;

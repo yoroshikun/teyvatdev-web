@@ -1,0 +1,5 @@
+mutation updateSlimeColor($color: String!) {
+  updateSlimeColor(color: $color) {
+    message
+  }
+}
